@@ -5,65 +5,63 @@ using System.Text;
 using System.Threading.Tasks;
 using BackEnd.Services.Models.Entities;
 
+
 namespace BackEnd.Services.Methods
 {
     public class AccountService
     {
+      
+
         private readonly Models.AccountContext database;
         public AccountService()
         {
             database = new Models.AccountContext();
         }
 
-        public List<User> GetUsers()
+        public List<User> GetUser()
         {
-            return database.Users.ToList();
+            return database.UserList.ToList();
         }
 
-        public void AddUser(User Info)
+        private User GetUserId(long userId)
         {
-            database.Users.Add(Info);
-            database.SaveChanges();
+            return database.UserList.Where(u => u.UserId.Equals(userId)).FirstOrDefault();
         }
 
-        private Models.Entities.User GetUserId(long userId)
+        public User GetFirstName(string firstName)
         {
-            return database.Users.Where(u => u.UserId.Equals(userId)).FirstOrDefault();
+            return database.UserList.Where(u => u.FirstName.Equals(firstName)).FirstOrDefault();
         }
 
-        public Models.Entities.User GetFirstName(string firstName)
+        public User GetLastName(string lastName)
         {
-            return database.Users.Where(u => u.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.LastName.Equals(lastName)).FirstOrDefault();
         }
-
-        public Models.Entities.User GetLastName(string lastName)
+        public User GetBirthday(string birthDay)
         {
-            return database.Users.Where(u => u.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.Birthday.Equals(birthDay)).FirstOrDefault();
         }
-        public Models.Entities.User GetEmail(string emailAddress)
+        public User GetGender(string genDer)
         {
-            return database.Users.Where(u => u.EmailAddress.Equals(emailAddress, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.Gender.Equals(genDer)).FirstOrDefault();
         }
-        public Models.Entities.User GetPassword(string passWord)
+        public User GetEmail(string emailAddress)
         {
-            return database.Users.Where(u => u.Password.Equals(passWord, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
         }
-        public Models.Entities.User GetConfirmtPassword(string confirmPassword)
+        public User GetPassword(string passWord)
         {
-            return database.Users.Where(u => u.ConfirmPassword.Equals(confirmPassword, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.Password.Equals(passWord)).FirstOrDefault();
         }
-        public Models.Entities.User GetBirthday(string birthDay)
+        public User GetConfirmtPassword(string confirmPassword)
         {
-            return database.Users.Where(u => u.Birthday.Equals(birthDay, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return database.UserList.Where(u => u.ConfirmPassword.Equals(confirmPassword)).FirstOrDefault();
         }
-        public Models.Entities.User GetGender(string genDer)
-        {
-            return database.Users.Where(u => u.Gender.Equals(genDer, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-        }
+     
 
         public void Save(User user)
         {
-            database.Users.Add(user);
+            database.UserList.Add(user);
             database.SaveChanges();
         }
     }
